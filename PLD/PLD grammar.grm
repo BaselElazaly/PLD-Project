@@ -1,0 +1,69 @@
+
+"Start Symbol" = <program>
+!---Terminal------
+Id= [_]|{letter} {Alphanumeric}*
+Digit= ('+'|'-')? {digit}+ ('.' {digit}+)? (('e'| ('-''+')? {digit}+)'^' ('+'|'-') {digit}+('.'{letter}+)? )? 
+!--Rules------
+<program> ::= 'Start' <stmt_list> 'End'
+<stmt_list> ::= <concept> 
+             | <concept><stmt_list>
+<concept>::= <assign>
+          |<if_stmt>
+          |<switch-statement>
+          |<for_stmt>
+          |<while-statement>
+          |<do_while_stmt>
+<assign> ::= <id>'='<expr> ';'
+<id> ::= Id
+<expr> ::= <expr>'+' <term>
+        |<expr>'-' <term>
+        |<term>
+
+<term> ::= <term>'*'<factor>
+        |<term>'/'<factor>
+        |<term>'%'<factor>
+        |<factor>
+<factor> ::= <factor>'**'<exp>
+          |<exp>
+<exp> ::= '('<expr>')' 
+       |<id>
+       |<digit>
+<digit> ::= Digit 
+         
+
+!---------if stmt-------------
+<if_stmt>::= if '('<cond>')' so <stmt_list> 
+          |if '('<cond>')' so <stmt_list>  else <stmt_list> 
+<cond> ::= <expr><op><expr>
+<op> ::= '<'|'>'|'==' |'!='
+      
+!---------for stmt-------------
+<for_stmt> ::= For '('<data><assign> ';' <cond> ';' <step>')' '{' <stmt_list>'}'
+<data> ::= int |float  |double |string
+<step>::= '--'<id>
+       |<id>'--'
+       |'++'<id>
+       |<id>'++'
+       |<assign>
+   
+!-------Switch---------------
+<switch-statement> ::= Choose '(' <cond> ')' Cases <Games> End
+
+<Games> ::= <Game> | <Game> <Games> | <default-Game>
+
+<Game> ::= case <id> ':' <stmt_list>
+
+<default-Game> ::= default ':' <stmt_list>
+                
+
+!------While-------------
+
+<while-statement> ::= while '(' <cond> ')' Start <stmt_list> End
+                   
+!------Do while----------
+
+<do_while_stmt> ::= do '{' <stmt_list> '}' while '(' <cond> ')' ';'
+
+
+
+
